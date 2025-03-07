@@ -102,17 +102,31 @@
             </div>
 
             <!-- Con operaciones -->
-             <div class="hidden">
-                <ul id="titulos-operaciones">
-                    <li>Descripción</li>
-                    <li>Categoría</li>
-                    <li>Tipo</li>
-                    <li>Fecha</li>
-                    <li>Monto</li>
-                    <li>Acciones</li>
-                </ul>
+             <div class="">
+                <table class="table-auto">
+                    <thead>
+                      <tr>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
 
-                <div id="listado-operaciones"></div>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+           
              </div>
 
         </div>
@@ -123,12 +137,23 @@
     <!-- CATEGORIAS -->
     <section id="view-categorias" class="hidden">
         <div id="container-categorias">
-        <h2>Categorías</h2>
-        <label>Nombre</label>
-        <input type="text">
-        <button class="border border-black rounded mx-4">Agregar</button>
+            <h2>Categorías</h2>
+            <label>Nombre</label>
+            <input type="text">
+            <button class="border border-black rounded mx-4">Agregar</button>
 
         <!-- Agregar tabla -->
+        <div class="">
+            <table class="table-auto">
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+       
+         </div>
         </div>
 
     </section>
@@ -140,16 +165,86 @@
 
             <div>
                 <h3>Resumen</h3>
-                <!-- Agregar tabla -->
+                <table class="table-auto">
+                    <tbody>
+                      <tr>
+                        <td>Categoría con mayor ganacia</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <td>Categoría con mayor gasto</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <td>Categoría con mayor balance</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <td>Mes con mayor ganacia</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <td>Mes con mayor gasto</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
             </div>
 
             <div>
                 <h3>Totales por categorías</h3>
-                <!-- Agregar tabla -->
+                
+                <table class="table-auto">
+                    <thead>
+                      <tr>
+                        <th>Categoría</th>
+                        <th>Ganancias</th>
+                        <th>Gastos</th>
+                        <th>Balance</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+           
             </div>
             <div>
                 <h3>Totales por mes</h3>
-                <!-- Agregar tabla -->
+                <table class="table-auto">
+                    <thead>
+                      <tr>
+                        <th>Mes</th>
+                        <th>Ganancias</th>
+                        <th>Gastos</th>
+                        <th>Balance</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
             </div>
         </div>
         
