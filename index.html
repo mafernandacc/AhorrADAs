@@ -7,56 +7,64 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <title>AhorrADAs</title>
 </head>
-<body>
+
+<body class="bg-neutral-100">
 
 
-   <header>
-    <h1 id="view-home">AhorrADAs</h1>
-    <nav>
-        <button id="button-view-balance" class="border border-black rounded mx-4">Balance</button>
-        <button id="button-view-categorias" class="border border-black rounded mx-4">Categorías</button>
-        <button id="button-view-reportes" class="border border-black rounded mx-4">Reportes</button>
+   <header class="relative mb-2 p-2 bg-teal-400">
+    <h1 id="view-home" class="p-1 text-4xl text-center font-mono font-black text-neutral-50">AhorrADAs</h1>
+    <nav class=" flex justify-center">
+        <button id="button-view-balance" class="mx-2 p-1 rounded text-sm font-mono text-neutral-50 hover:bg-teal-500 font-black">Balance</button>
+        <button id="button-view-categorias" class="mx-2 p-1 rounded text-sm font-mono text-neutral-50 hover:bg-teal-500 font-black">Categorías</button>
+        <button id="button-view-reportes" class="mx-2 p-1  rounded text-sm font-mono text-neutral-50 hover:bg-teal-500 font-black">Reportes</button>
     </nav>
    </header>
 
 
    <main>
     <!--SECCIÓN PRINCIPAL-->
-    <section id="view-balance">
+    <section id="view-balance" class="p-4">
         <!-- BALANCE -->
-        <div id="container-balance" class="border border-black">
-            <h2>Balance</h2>
-            <div>
-                <p>Ganancias</p>
-                <p>+$0</p>
-            </div>
-            <div>
-                <p>Gastos</p>
-                <p>-$0</p>
-            </div>
-            <div>
-                <p>Total</p>
-                <p>$0</p>
-            </div>
+        <div id="container-balance" class="mx-2 mb-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
+            <h2 class="mb4 p-1 text-xl font-mono font font-black">Balance</h2>
+            <table class="table-auto">
+                <tbody>
+                  <tr>
+                    <td>Ganancias</td>
+                    <td class="text-green-600">+$0</td>
+                  </tr>
+
+                  <tr>
+                    <td>Gastos</td>
+                    <td class="text-red-600">-$0</td>
+                  </tr>
+
+                  <tr>
+                    <td>Total</td>
+                    <td class="font-black">$0</td>
+                  </tr>
+
+                </tbody>
+              </table>
 
         </div>
 
         <!-- FILTROS -->
-        <div id="container-filtros" class="border border-black">
-            <h2>Filtros</h2>
-            <a id="ocultar-mostrar-filtros">Ocultar filtros</a>
-            <div>
-                <label>Tipo</label>
-                <select>
+        <div id="container-filtros" class="mx-2 mb-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
+            <h2 class="mb-2 p-1 text-xl font-mono font font-black">Filtros</h2>
+            <a id="ocultar-mostrar-filtros" class="text-sky-600">Ocultar filtros</a>
+            <div class="m-1 flex flex-col">
+                <label class="font-black">Tipo</label>
+                <select class="border">
                     <option value="Todos">Todos</option>
                     <option value="Ganancia">Ganancia</option>
                     <option value="Gasto">Gasto</option>
                 </select>
             </div>
 
-            <div>
-                <label>Categoría</label>
-                <select>
+            <div class="m-1 flex flex-col">
+                <label class="font-black">Categoría</label>
+                <select class="border">
                     <option value="Todas">Todas</option>
                     <option value="Servicios">Servicios</option>
                     <option value="Salidas">Salidas</option>
@@ -68,16 +76,16 @@
                 </select>
             </div>
 
-            <div>
-                <label>Desde</label>
-                <input type="date">
+            <div class="m-1 flex flex-col">
+                <label class="font-black">Desde</label>
+                <input type="date" class="border">
 
             </div>
 
 
-            <div>
-                <label>Ordenar por</label>
-                <select>
+            <div class="m-1 flex flex-col">
+                <label class="font-black">Ordenar por</label>
+                <select class="border">
                     <option value="Más reciente">Más reciente</option>
                     <option value="Menos reciente">Menos reciente</option>
                     <option value="Mayor monto">Mayor monto</option>
@@ -90,19 +98,19 @@
         </div>
 
         <!-- OPERACIONES -->
-        <div id="container-operaciones" class="border border-black">
-            <h2>Operaciones</h2>
-            <button>+ Nueva operación</button>
+        <div id="container-operaciones" class="mx-2 mb-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
+            <h2 class="mb4 p-1 text-xl font-mono font font-black">Operaciones</h2>
+            <button class="mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-teal-400 font-black">+ Nueva operación</button>
 
             <!-- Sin resultados -->
             <div>
-                <img>
-                <h3>Sin resultados</h3>
-                <p>Cambia los filtros o agrega operaciones</p>
+                <img src="assets/img/img-sin-operaciones.png" class="justify-self-center">
+                <h3 class="m-4 text-lg text-center font-black">Sin resultados</h3>
+                <p class="text-center">Cambia los filtros o agrega operaciones</p>
             </div>
 
             <!-- Con operaciones -->
-             <div class="">
+             <div class="hidden">
                 <table class="table-auto">
                     <thead>
                       <tr>
@@ -135,12 +143,14 @@
     </section>
 
     <!-- CATEGORIAS -->
-    <section id="view-categorias" class="hidden">
-        <div id="container-categorias">
-            <h2>Categorías</h2>
-            <label>Nombre</label>
-            <input type="text">
-            <button class="border border-black rounded mx-4">Agregar</button>
+    <section id="view-categorias" class="hidden mx-4 my-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
+        <h2 class="mb4 p-1 text-3xl font-mono font font-black">Categorías</h2>
+        <div id="container-categorias" class="flex flex-col">
+            <label class="my-4 text-lg font-black">Nombre</label>
+            <div class="flex">
+                <input type="text" class="border">
+                <button class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
+            </div>
 
         <!-- Agregar tabla -->
         <div class="">
@@ -159,12 +169,20 @@
     </section>
 
     <!-- REPORTES -->
-    <section id="view-reportes" class="hidden">
-        <div id="container-reportes">
-            <h2>Reportes</h2>
+    <section id="view-reportes" class="hidden mx-4 my-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
+        <h2  class="mb4 p-1 text-3xl font-mono font font-black">Reportes</h2>
+        
+        <div id="container-reportes-sin-resultados" class="">
+            <img src="assets/img/img-reportes-sin-resultados.png" class="justify-self-center">
+            <h3 class="m-4 text-lg text-center font-black">Operaciones insuficientes</h3>
+            <p class="text-center">Prueba agregando más operaciones</p>
 
+
+        </div>
+
+        <div id="container-reportes" class="hidden">
             <div>
-                <h3>Resumen</h3>
+                <h3 class="my-4 text-lg font-black">Resumen</h3>
                 <table class="table-auto">
                     <tbody>
                       <tr>
@@ -201,7 +219,7 @@
             </div>
 
             <div>
-                <h3>Totales por categorías</h3>
+                <h3 class="my-4 text-lg font-black">Totales por categorías</h3>
                 
                 <table class="table-auto">
                     <thead>
@@ -225,7 +243,7 @@
            
             </div>
             <div>
-                <h3>Totales por mes</h3>
+                <h3 class="my-4 text-lg font-black">Totales por mes</h3>
                 <table class="table-auto">
                     <thead>
                       <tr>
@@ -252,24 +270,24 @@
 
     <!-- FORMULARIOS -->
     <!-- FORMULARIO NUEVA OPERACIÓN -->
-     <section id="view-formulario-nueva-operacion" class="hidden">
-        <h2>Nueva operación</h2>
+     <section id="view-formulario-nueva-operacion" class="hidden mx-4 my-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
+        <h2 class="mb-2 p-1 text-xl font-mono font font-black">Nueva operación</h2>
 
-        <form>
-            <label>Descripción</label>
-            <input type="text">
+        <form class="flex flex-col">
+            <label class="font-black">Descripción</label>
+            <input type="text" class="border">
 
-            <label>Monto</label>
-            <input type="number">
+            <label class="font-black">Monto</label>
+            <input type="number" class="border">
 
-            <label>Tipo</label>
-            <select>
+            <label class="font-black">Tipo</label>
+            <select class="border">
                 <option>Ganancia</option>
                 <option>Gasto</option>
             </select>
 
-            <label>Categoría</label>
-            <select>
+            <label class="font-black">Categoría</label>
+            <select class="border">
                 <option value="Todas">Todas</option>
                 <option value="Servicios">Servicios</option>
                 <option value="Salidas">Salidas</option>
@@ -280,33 +298,33 @@
                 <option value="Comida">Comida</option>
             </select>
 
-            <label>Fecha</label>
-            <input type="date">
+            <label class="font-black">Fecha</label>
+            <input type="date" class="border">
 
-            <button>Cancelar</button>
-            <button type="submit">Agregar</button>
+            <button class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
+            <button type="submit" class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
         </form>
      </section>
 
     <!-- FORMULARIO EDITAR OPERACIÓN -->
-     <section id="view-editar-nueva-operacion" class="hidden">
-        <h2>Editar operación</h2>
+     <section id="view-editar-nueva-operacion" class="hidden mx-4 my-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
+        <h2 class="mb-2 p-1 text-xl font-mono font font-black">Editar operación</h2>
 
-        <form>
-            <label>Descripción</label>
-            <input type="text">
+        <form class="flex flex-col">
+            <label class="font-black">Descripción</label>
+            <input type="text" class="border">
 
-            <label>Monto</label>
-            <input type="number">
+            <label class="font-black">Monto</label>
+            <input type="number" class="border">
 
-            <label>Tipo</label>
-            <select>
+            <label class="font-black">Tipo</label>
+            <select class="border">
                 <option>Ganancia</option>
                 <option>Gasto</option>
             </select>
 
-            <label>Categoría</label>
-            <select>
+            <label class="font-black">Categoría</label>
+            <select class="border">
                 <option value="Todas">Todas</option>
                 <option value="Servicios">Servicios</option>
                 <option value="Salidas">Salidas</option>
@@ -317,16 +335,16 @@
                 <option value="Comida">Comida</option>
             </select>
 
-            <label>Fecha</label>
-            <input type="date">
+            <label class="font-black">Fecha</label>
+            <input type="date" class="border">
 
-            <button>Cancelar</button>
-            <button type="submit">Agregar</button>
+            <button class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
+            <button type="submit"  class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
         </form>
      </section>
 
    </main>
 </body>
 
-<script src="main.js/"></script>
+<script src="main.js"></script>
 </html>
