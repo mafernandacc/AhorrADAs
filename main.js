@@ -1,5 +1,6 @@
 import funciones from "./funciones.js"; 
 
+
 //Funciones selectoras de elementos HTML//
 const $ = element => document.querySelector(element)
 const $$ = element => document.querySelectorAll(element)
@@ -40,8 +41,21 @@ $buttonNuevaOperacion.addEventListener("click", () => {
     hideElement([$viewBalance, $viewCategorias, $viewReportes])
 })
 
+//NUEVA OPERACIÓN 
+$viewFormularioNuevaOperacion.addEventListener("submit", (evento) => {
+    evento.preventDefault();
 
+    const nuevaOperacion = {
+        id: crypto.randomUUID(),
+        description: evento.target[0].value,
+        amount: Number(evento.target[1].value),
+        type: evento.target[2].value,
+        category: evento.target[3].value,
+        date: dayjs(evento.target[4].value).format("DD-MM-YYYY")
+    }
 
+    funciones.agregarOperacion(nuevaOperacion)
+})
 
 
 

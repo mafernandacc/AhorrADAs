@@ -275,19 +275,19 @@
 
         <form class="flex flex-col">
             <label class="font-black">Descripción</label>
-            <input type="text" class="border">
+            <input id="create-description" type="text" class="border">
 
             <label class="font-black">Monto</label>
-            <input type="number" class="border">
+            <input id="create-amount" type="number" class="border">
 
             <label class="font-black">Tipo</label>
-            <select class="border">
+            <select id="create-type" class="border">
                 <option>Ganancia</option>
                 <option>Gasto</option>
             </select>
 
             <label class="font-black">Categoría</label>
-            <select class="border">
+            <select id="create-category" class="border">
                 <option value="Todas">Todas</option>
                 <option value="Servicios">Servicios</option>
                 <option value="Salidas">Salidas</option>
@@ -299,7 +299,7 @@
             </select>
 
             <label class="font-black">Fecha</label>
-            <input type="date" class="border">
+            <input id="create-date" type="date" class="border">
 
             <button class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
             <button type="submit" class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
