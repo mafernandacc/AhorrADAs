@@ -1,4 +1,4 @@
-let datosTodasLasOperaciones = []
+let datosTodasLasOperaciones = leerLocalStorage("operaciones") || [];
 
 function leerLocalStorage(key) {
   const datos = JSON.parse(localStorage.getItem(key))
@@ -10,13 +10,13 @@ function guardarLocalStorage(key, data) {
 }
 
 function agregarOperacion(objetoNuevaOperacion) {
-  datosTodasLasOperaciones.push(objetoNuevaOperacion)
-  guardarLocalStorage("operaciones", datosTodasLasOperaciones)
-
+  datosTodasLasOperaciones.push(objetoNuevaOperacion);
+  guardarLocalStorage("operaciones", datosTodasLasOperaciones);
+  return datosTodasLasOperaciones; 
 }
 
 export default {
     leerLocalStorage,
     guardarLocalStorage,
-    agregarOperacion
+    agregarOperacion,
 }

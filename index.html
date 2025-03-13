@@ -110,8 +110,8 @@
             </div>
 
             <!-- Con operaciones -->
-             <div class="hidden">
-                <table class="table-auto">
+             <div class="">
+                <table id="list-operaciones" class="table-auto">
                     <thead>
                       <tr>
                         <th>Descripción</th>
@@ -273,7 +273,7 @@
      <section id="view-formulario-nueva-operacion" class="hidden mx-4 my-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
         <h2 class="mb-2 p-1 text-xl font-mono font font-black">Nueva operación</h2>
 
-        <form class="flex flex-col">
+        <form id="formulario-nueva-operacion" class="flex flex-col">
             <label class="font-black">Descripción</label>
             <input id="create-description" type="text" class="border">
 
@@ -301,7 +301,7 @@
             <label class="font-black">Fecha</label>
             <input id="create-date" type="date" class="border">
 
-            <button class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
+            <button id="button-cancelar-operacion" class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
             <button type="submit" class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
         </form>
      </section>

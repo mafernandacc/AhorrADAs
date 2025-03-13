@@ -1,26 +1,29 @@
 import funciones from "./funciones.js"; 
 
-
 //Funciones selectoras de elementos HTML//
 const $ = element => document.querySelector(element)
 const $$ = element => document.querySelectorAll(element)
 
 //SELECCIÓN DE ELEMENTOS HTML//
-
 //Secciones
 const $viewBalance = $("#view-balance")
 const $viewCategorias = $("#view-categorias")
 const $viewReportes = $("#view-reportes")
 const $viewFormularioNuevaOperacion = $("#view-formulario-nueva-operacion")
+const $formularioNuevaOperacion = $("#formulario-nueva-operacion")
+const $listadoDeOperaciones = $("#list-operaciones")
 
-//Botones vistas
+//Botones 
 const $buttonViewBalance = $("#button-view-balance")
 const $buttonViewCategorias = $("#button-view-categorias")
 const $buttonViewReportes = $("#button-view-reportes")
 const $buttonNuevaOperacion = $("#button-nueva-operacion")
+const $buttonCancelarOperacion = $("#button-cancelar-operacion");
 
+// Cargar operaciones guardadas
+let datosTodasLasOperaciones = funciones.leerLocalStorage("operaciones") || [];
 
-//VISTAS
+// VISTAS
 $buttonViewBalance.addEventListener("click", () => {
     showElement([$viewBalance])
     hideElement([$viewCategorias, $viewReportes])
@@ -41,8 +44,33 @@ $buttonNuevaOperacion.addEventListener("click", () => {
     hideElement([$viewBalance, $viewCategorias, $viewReportes])
 })
 
-//NUEVA OPERACIÓN 
-$viewFormularioNuevaOperacion.addEventListener("submit", (evento) => {
+// Pintar datos en la tabla
+function pintarDatos(array) {
+    const tbody = document.querySelector("#list-operaciones tbody");
+    tbody.innerHTML = ""; 
+
+    array.forEach(operacion => {
+        const fila = tbody.insertRow();
+
+        fila.innerHTML = `
+            <td>${operacion.description}</td>
+            <td>${operacion.category}</td>
+            <td>${operacion.type}</td>
+            <td>${operacion.date}</td>
+            <td>${operacion.amount}</td>
+            <td>
+                <button class="editar" data-id="${operacion.id}">Editar</button>
+                <button class="eliminar" data-id="${operacion.id}">Eliminar</button>
+            </td>
+        `;
+    });
+}
+
+// Pintar los datos al cargar la página
+pintarDatos(datosTodasLasOperaciones);
+
+//Formulario Nueva Operación 
+$formularioNuevaOperacion.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
     const nuevaOperacion = {
@@ -54,13 +82,28 @@ $viewFormularioNuevaOperacion.addEventListener("submit", (evento) => {
         date: dayjs(evento.target[4].value).format("DD-MM-YYYY")
     }
 
-    funciones.agregarOperacion(nuevaOperacion)
+    datosTodasLasOperaciones = funciones.agregarOperacion(nuevaOperacion);
+
+    pintarDatos(datosTodasLasOperaciones);
+  
+    hideElement([$viewFormularioNuevaOperacion]);
+    showElement([$viewBalance]);
+
+    $formularioNuevaOperacion.reset();
 })
 
+// Cancelar Nueva Operación
+$buttonCancelarOperacion.addEventListener("click", (evento) => {
+    evento.preventDefault(); 
+
+    showElement([$viewBalance]);
+    hideElement([$viewFormularioNuevaOperacion]);
+
+    $formularioNuevaOperacion.reset();
+});
 
 
-
-//FUNCIONES AUXILIARES 
+// FUNCIONES AUXILIARES 
 const showElement = (selectors) => {
     for (const selector of selectors) {
         selector.classList.remove("hidden");
