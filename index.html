@@ -64,7 +64,7 @@
 
             <div class="m-1 flex flex-col">
                 <label class="font-black">Categoría</label>
-                <select class="border">
+                <select  id="filtrar-por-categoria" class="border">
                     <option value="Todas">Todas</option>
                     <option value="Servicios">Servicios</option>
                     <option value="Salidas">Salidas</option>
@@ -139,7 +139,6 @@
 
         </div>
 
-        <!-- CATEGORIAS -->
     </section>
 
     <!-- CATEGORIAS -->
@@ -147,14 +146,14 @@
         <h2 class="mb4 p-1 text-3xl font-mono font font-black">Categorías</h2>
         <div id="container-categorias" class="flex flex-col">
             <label class="my-4 text-lg font-black">Nombre</label>
-            <div class="flex">
+            <form id="agregar-nueva-categoria" class="flex">
                 <input type="text" class="border">
-                <button class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
-            </div>
+                <button type="submit" class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
+            </form>
 
         <!-- Agregar tabla -->
         <div class="">
-            <table class="table-auto">
+            <table id="tabla-listado-categorias" class="table-auto">
                 <tbody>
                   <tr>
                     <td></td>
@@ -288,7 +287,6 @@
 
             <label class="font-black">Categoría</label>
             <select id="create-category" class="border">
-                <option value="Todas">Todas</option>
                 <option value="Servicios">Servicios</option>
                 <option value="Salidas">Salidas</option>
                 <option value="Educación">Gasto</option>
@@ -325,7 +323,6 @@
 
             <label class="font-black">Categoría</label>
             <select id="editar-categoria" class="border">
-                <option value="Todas">Todas</option>
                 <option value="Servicios">Servicios</option>
                 <option value="Salidas">Salidas</option>
                 <option value="Educación">Gasto</option>

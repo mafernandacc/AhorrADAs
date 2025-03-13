@@ -31,6 +31,7 @@ const $formularioEditarOperacion = $("#formulario-editar-operacion")
 const $containerOperaciones = $("#container-operaciones")
 const $containerOperacionesSinResultados = $("#container-operaciones-sin-resultados")
 const $containerOperacionesConResultados = $("#container-operaciones-con-resultados")
+const $formNuevaCategoria = $("#agregar-nueva-categoria");
 
 //Botones 
 const $buttonViewBalance = $("#button-view-balance")
@@ -205,3 +206,94 @@ $buttonCancelarEdicion.addEventListener("click", (evento) => {
     showElement([$viewBalance]);
     hideElement([$viewEditarNuevaOperacion]);
 });
+
+
+//CATEGORIAS
+let categorias = funciones.leerLocalStorage("categorias") || [];
+
+// Actualizar las categorías en los selectores
+function actualizarCategoriasEnSelectores() {
+    const selectores = ["#create-category", "#editar-categoria", "#filtrar-por-categoria"];
+    
+    selectores.forEach(selector => {
+      const select = $(selector);
+      select.innerHTML = "<option value=''>Seleccionar categoría</option>"; // Resetear el contenido del select
+  
+    
+      categorias.forEach(categoria => {
+        const option = document.createElement("option");
+        option.value = categoria;
+        option.textContent = categoria;
+        select.appendChild(option);
+      });
+    });
+  }
+  
+  // Pintar las categorías en la tabla
+  function pintarCategorias(array) {
+    const tbody = document.querySelector("#tabla-listado-categorias tbody");
+    tbody.innerHTML = ""; 
+  
+    array.forEach(categoria => {
+      const fila = tbody.insertRow();
+      fila.innerHTML = `
+        <td>${categoria}</td>
+        <td>
+          <button class="editar-categoria" data-categoria="${categoria}">Editar</button>
+          <button class="eliminar-categoria" data-categoria="${categoria}">Eliminar</button>
+        </td>
+      `;
+    });
+  
+    actualizarCategoriasEnSelectores();
+  }
+  
+  // Agregar nueva categoría
+  $formNuevaCategoria.addEventListener("submit", (evento) => {
+    evento.preventDefault(); 
+    
+    const nuevaCategoria = evento.target[0].value.trim();
+    
+    if (nuevaCategoria && !categorias.includes(nuevaCategoria)) {
+      
+      categorias = funciones.agregarCategoria(nuevaCategoria);
+      
+      pintarCategorias(categorias);
+    
+      evento.target.reset();
+    }
+  });
+  
+  // Eliminar categoría
+  $("#tabla-listado-categorias").addEventListener("click", (evento) => {
+    if (evento.target.classList.contains("eliminar-categoria")) {
+      const categoria = evento.target.dataset.categoria;
+      
+      categorias = funciones.eliminarCategoria(categoria);
+      
+      pintarCategorias(categorias);
+    }
+  });
+  
+  // Editar categoría
+  $("#tabla-listado-categorias").addEventListener("click", (evento) => {
+    if (evento.target.classList.contains("editar-categoria")) {
+      const categoriaAntigua = evento.target.dataset.categoria;
+      
+      const nuevaCategoria = prompt("Edita la categoría", categoriaAntigua);
+      
+      if (nuevaCategoria && nuevaCategoria !== categoriaAntigua) {
+        
+        categorias = funciones.editarCategoria(categoriaAntigua, nuevaCategoria);
+        
+        pintarCategorias(categorias);
+      }
+    }
+  });
+  
+  //Categorías al iniciar la paágina
+  actualizarCategoriasEnSelectores();
+  
+  pintarCategorias(categorias);
+  
+  
