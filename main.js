@@ -4,6 +4,20 @@ import funciones from "./funciones.js";
 const $ = element => document.querySelector(element)
 const $$ = element => document.querySelectorAll(element)
 
+// FUNCIONES AUXILIARES 
+const showElement = (selectors) => {
+    for (const selector of selectors) {
+        selector.classList.remove("hidden");
+    }
+}
+
+const hideElement = (selectors) => {
+    for (const selector of selectors) {
+        selector.classList.add("hidden");
+    }
+}
+
+
 //SELECCIÓN DE ELEMENTOS HTML//
 //Secciones
 const $viewBalance = $("#view-balance")
@@ -14,6 +28,9 @@ const $formularioNuevaOperacion = $("#formulario-nueva-operacion")
 const $listadoDeOperaciones = $("#list-operaciones")
 const $viewEditarNuevaOperacion = $("#view-editar-nueva-operacion")
 const $formularioEditarOperacion = $("#formulario-editar-operacion")
+const $containerOperaciones = $("#container-operaciones")
+const $containerOperacionesSinResultados = $("#container-operaciones-sin-resultados")
+const $containerOperacionesConResultados = $("#container-operaciones-con-resultados")
 
 //Botones 
 const $buttonViewBalance = $("#button-view-balance")
@@ -25,6 +42,21 @@ const $buttonCancelarEdicion = $("#button-cancelar-edicion");
 
 // Cargar operaciones guardadas
 let datosTodasLasOperaciones = funciones.leerLocalStorage("operaciones") || [];
+
+// Vistas internas de las secciones de operaciones
+function actualizarVistaOperaciones() {
+    if (datosTodasLasOperaciones.length === 0) {
+        
+        showElement([$containerOperacionesSinResultados]);
+        hideElement([$containerOperacionesConResultados]);
+    } else {
+       
+        showElement([$containerOperacionesConResultados]);
+        hideElement([$containerOperacionesSinResultados]);
+    }
+}
+
+actualizarVistaOperaciones();
 
 // VISTAS
 $buttonViewBalance.addEventListener("click", () => {
@@ -72,6 +104,7 @@ function pintarDatos(array) {
 // Pintar los datos al cargar la página
 pintarDatos(datosTodasLasOperaciones);
 
+
 //Formulario Nueva Operación 
 $formularioNuevaOperacion.addEventListener("submit", (evento) => {
     evento.preventDefault();
@@ -88,6 +121,7 @@ $formularioNuevaOperacion.addEventListener("submit", (evento) => {
     datosTodasLasOperaciones = funciones.agregarOperacion(nuevaOperacion);
 
     pintarDatos(datosTodasLasOperaciones);
+    actualizarVistaOperaciones();
   
     hideElement([$viewFormularioNuevaOperacion]);
     showElement([$viewBalance]);
@@ -113,6 +147,7 @@ $listadoDeOperaciones.addEventListener("click", (evento) => {
         datosTodasLasOperaciones = funciones.eliminarOperacion(idOperacion);
 
         pintarDatos(datosTodasLasOperaciones);
+        actualizarVistaOperaciones();
     }
 });
 
@@ -158,6 +193,7 @@ $formularioEditarOperacion.addEventListener("submit", (evento) => {
     datosTodasLasOperaciones = funciones.editarOperacion(idOperacion, operacionActualizada);
 
     pintarDatos(datosTodasLasOperaciones);
+    actualizarVistaOperaciones();
 
     hideElement([$viewEditarNuevaOperacion]);
     showElement([$viewBalance]);
@@ -169,17 +205,3 @@ $buttonCancelarEdicion.addEventListener("click", (evento) => {
     showElement([$viewBalance]);
     hideElement([$viewEditarNuevaOperacion]);
 });
-
-
-// FUNCIONES AUXILIARES 
-const showElement = (selectors) => {
-    for (const selector of selectors) {
-        selector.classList.remove("hidden");
-    }
-}
-
-const hideElement = (selectors) => {
-    for (const selector of selectors) {
-        selector.classList.add("hidden");
-    }
-}
