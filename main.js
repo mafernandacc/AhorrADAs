@@ -12,13 +12,16 @@ const $viewReportes = $("#view-reportes")
 const $viewFormularioNuevaOperacion = $("#view-formulario-nueva-operacion")
 const $formularioNuevaOperacion = $("#formulario-nueva-operacion")
 const $listadoDeOperaciones = $("#list-operaciones")
+const $viewEditarNuevaOperacion = $("#view-editar-nueva-operacion")
+const $formularioEditarOperacion = $("#formulario-editar-operacion")
 
 //Botones 
 const $buttonViewBalance = $("#button-view-balance")
 const $buttonViewCategorias = $("#button-view-categorias")
 const $buttonViewReportes = $("#button-view-reportes")
 const $buttonNuevaOperacion = $("#button-nueva-operacion")
-const $buttonCancelarOperacion = $("#button-cancelar-operacion");
+const $buttonCancelarOperacion = $("#button-cancelar-operacion")
+const $buttonCancelarEdicion = $("#button-cancelar-edicion");
 
 // Cargar operaciones guardadas
 let datosTodasLasOperaciones = funciones.leerLocalStorage("operaciones") || [];
@@ -100,6 +103,71 @@ $buttonCancelarOperacion.addEventListener("click", (evento) => {
     hideElement([$viewFormularioNuevaOperacion]);
 
     $formularioNuevaOperacion.reset();
+});
+
+// Eliminar una operación
+$listadoDeOperaciones.addEventListener("click", (evento) => {
+    if (evento.target.classList.contains("eliminar")) {
+        const idOperacion = evento.target.dataset.id;
+       
+        datosTodasLasOperaciones = funciones.eliminarOperacion(idOperacion);
+
+        pintarDatos(datosTodasLasOperaciones);
+    }
+});
+
+// Editar operación
+$listadoDeOperaciones.addEventListener("click", (evento) => {
+    if (evento.target.classList.contains("editar")) {
+        const idOperacion = evento.target.dataset.id;
+        const operacion = datosTodasLasOperaciones.find(op => op.id === idOperacion);
+
+        if (operacion) {
+        
+            document.querySelector("#editar-descripcion").value = operacion.description;
+            document.querySelector("#editar-monto").value = operacion.amount;
+            document.querySelector("#editar-tipo").value = operacion.type;
+            document.querySelector("#editar-categoria").value = operacion.category;
+            document.querySelector("#editar-fecha").value = dayjs(operacion.date, "DD-MM-YYYY").format("YYYY-MM-DD");
+
+            document.querySelector("#formulario-editar-operacion").dataset.id = idOperacion;
+
+            showElement([$viewEditarNuevaOperacion]);
+            hideElement([$viewBalance, $viewCategorias, $viewReportes, $viewFormularioNuevaOperacion]);
+        }
+    }
+});
+
+$formularioEditarOperacion.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+
+    const idOperacion = evento.target.dataset.id;
+
+    if (!idOperacion) {
+        return; 
+    }
+
+    const operacionActualizada = {
+        description: evento.target[0].value,
+        amount: Number(evento.target[1].value),
+        type: evento.target[2].value,
+        category: evento.target[3].value,
+        date: dayjs(evento.target[4].value).format("DD-MM-YYYY")
+    };
+
+    datosTodasLasOperaciones = funciones.editarOperacion(idOperacion, operacionActualizada);
+
+    pintarDatos(datosTodasLasOperaciones);
+
+    hideElement([$viewEditarNuevaOperacion]);
+    showElement([$viewBalance]);
+});
+
+$buttonCancelarEdicion.addEventListener("click", (evento) => {
+    evento.preventDefault(); 
+
+    showElement([$viewBalance]);
+    hideElement([$viewEditarNuevaOperacion]);
 });
 
 
