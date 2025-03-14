@@ -55,7 +55,6 @@ function editarCategoria(categoriaAntigua, categoriaNueva) {
   return categorias;
 }
 
-
 export default {
     leerLocalStorage,
     guardarLocalStorage,

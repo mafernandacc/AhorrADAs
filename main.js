@@ -53,7 +53,7 @@ const $tablaReportesResumen = $("#tabla-reportes-resumen")
 const $tablaReportesTotalesCategoria = $("#tabla-reportes-totales-categoria")
 const $tablaReportesTotalesMes = $("#tabla-reportes-totales-mes")
 
-// Cargar datos iniciales
+// Cargar operaciones guardadas
 let datosTodasLasOperaciones = funciones.leerLocalStorage("operaciones") || [];
 
 // Vistas internas de las secciones de operaciones
@@ -164,6 +164,7 @@ $listadoDeOperaciones.addEventListener("click", (evento) => {
         pintarDatos(datosTodasLasOperaciones);
         actualizarVistaOperaciones();
         actualizarBalance();
+
     }
 });
 
@@ -389,6 +390,7 @@ function actualizarDatos() {
     pintarDatos(operacionesFiltradas);
 }
 
+
 //BALANCE
 function calcularBalance(operaciones) {
     let ganancias = 0;
@@ -427,3 +429,4 @@ $selectOrdenarPor.addEventListener("change", actualizarBalance);
 document.addEventListener("DOMContentLoaded", function() {
     actualizarBalance();
 });
+
