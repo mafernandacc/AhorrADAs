@@ -27,7 +27,7 @@
         <!-- BALANCE -->
         <div id="container-balance" class="mx-2 mb-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
             <h2 class="mb4 p-1 text-xl font-mono font font-black">Balance</h2>
-            <table class="table-auto">
+            <table id="tabla-balance" class="table-auto">
                 <tbody>
                   <tr>
                     <td>Ganancias</td>
@@ -112,8 +112,9 @@
             </div>
 
             <!-- Con operaciones -->
-             <div id="container-operaciones-con-resultados" class="">
-                <table id="list-operaciones" class="table-auto">
+             <div id="container-operaciones-con-resultados" class="hidden overflow-x-auto">
+                <table id="list-operaciones" class="table-auto w-full table-striped">
+
                     <thead>
                       <tr>
                         <th>Descripción</th>
@@ -184,7 +185,7 @@
         <div id="container-reportes" class="hidden">
             <div>
                 <h3 class="my-4 text-lg font-black">Resumen</h3>
-                <table class="table-auto">
+                <table id="tabla-reportes-resumen" class="table-auto">
                     <tbody>
                       <tr>
                         <td>Categoría con mayor ganacia</td>
@@ -222,7 +223,7 @@
             <div>
                 <h3 class="my-4 text-lg font-black">Totales por categorías</h3>
                 
-                <table class="table-auto">
+                <table id="tabla-reportes-totales-categoria" class="table-auto">
                     <thead>
                       <tr>
                         <th>Categoría</th>
@@ -245,7 +246,7 @@
             </div>
             <div>
                 <h3 class="my-4 text-lg font-black">Totales por mes</h3>
-                <table class="table-auto">
+                <table id="tabla-reportes-totales-mes" class="table-auto">
                     <thead>
                       <tr>
                         <th>Mes</th>

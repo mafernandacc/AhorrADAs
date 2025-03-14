@@ -17,7 +17,6 @@ const hideElement = (selectors) => {
     }
 }
 
-
 //SELECCIÓN DE ELEMENTOS HTML//
 //Secciones
 const $viewBalance = $("#view-balance")
@@ -31,7 +30,8 @@ const $formularioEditarOperacion = $("#formulario-editar-operacion")
 const $containerOperacionesSinResultados = $("#container-operaciones-sin-resultados")
 const $containerOperacionesConResultados = $("#container-operaciones-con-resultados")
 const $formNuevaCategoria = $("#agregar-nueva-categoria");
-const containerFormularioFiltros = $("#container-formulario-filtros");
+const $containerFormularioFiltros = $("#container-formulario-filtros");
+const $containerReportes = $("#container-reportes")
 
 //Botones 
 const $buttonViewBalance = $("#button-view-balance")
@@ -48,6 +48,10 @@ const $selectFiltrarPorCategoria = $("#select-filtrar-por-categoria")
 const $inputFiltrarPorFecha = $("#input-filtrar-por-fecha")
 const $selectOrdenarPor = $("#select-ordenar-por")
 
+//Tablas reportes
+const $tablaReportesResumen = $("#tabla-reportes-resumen")
+const $tablaReportesTotalesCategoria = $("#tabla-reportes-totales-categoria")
+const $tablaReportesTotalesMes = $("#tabla-reportes-totales-mes")
 
 // Cargar operaciones guardadas
 let datosTodasLasOperaciones = funciones.leerLocalStorage("operaciones") || [];
@@ -66,6 +70,7 @@ function actualizarVistaOperaciones() {
 }
 
 actualizarVistaOperaciones();
+actualizarBalance();
 
 // VISTAS
 $buttonViewBalance.addEventListener("click", () => {
@@ -97,14 +102,14 @@ function pintarDatos(array) {
         const fila = tbody.insertRow();
 
         fila.innerHTML = `
-            <td>${operacion.description}</td>
-            <td>${operacion.category}</td>
-            <td>${operacion.type}</td>
-            <td>${operacion.date}</td>
-            <td>${operacion.amount}</td>
-            <td>
-                <button class="editar" data-id="${operacion.id}">Editar</button>
-                <button class="eliminar" data-id="${operacion.id}">Eliminar</button>
+            <td class="text-center">${operacion.description}</td>
+            <td class="text-center">${operacion.category}</td>
+            <td class="text-center">${operacion.type}</td>
+            <td class="text-center">${operacion.date}</td>
+            <td class="text-center">${operacion.amount}</td>
+            <td class="text-center">
+                <button class="editar text-sky-600" data-id="${operacion.id}">Editar</button>
+                <button class="eliminar text-sky-600" data-id="${operacion.id}">Eliminar</button>
             </td>
         `;
     });
@@ -131,6 +136,7 @@ $formularioNuevaOperacion.addEventListener("submit", (evento) => {
 
     pintarDatos(datosTodasLasOperaciones);
     actualizarVistaOperaciones();
+    actualizarBalance();
   
     hideElement([$viewFormularioNuevaOperacion]);
     showElement([$viewBalance]);
@@ -157,6 +163,8 @@ $listadoDeOperaciones.addEventListener("click", (evento) => {
 
         pintarDatos(datosTodasLasOperaciones);
         actualizarVistaOperaciones();
+        actualizarBalance();
+
     }
 });
 
@@ -203,6 +211,7 @@ $formularioEditarOperacion.addEventListener("submit", (evento) => {
 
     pintarDatos(datosTodasLasOperaciones);
     actualizarVistaOperaciones();
+    actualizarBalance();
 
     hideElement([$viewEditarNuevaOperacion]);
     showElement([$viewBalance]);
@@ -362,8 +371,8 @@ function aplicarOrden(operacionesFiltradas, ordenSeleccionado) {
 
 // Filtrar y ordenar 
 $ocultarMostrarFiltros.addEventListener("click", () => {
-    containerFormularioFiltros.classList.toggle("hidden");
-    const texto = containerFormularioFiltros.classList.contains("hidden") ? "Mostrar filtros" : "Ocultar filtros";
+    $containerFormularioFiltros.classList.toggle("hidden");
+    const texto = $containerFormularioFiltros.classList.contains("hidden") ? "Mostrar filtros" : "Ocultar filtros";
     $ocultarMostrarFiltros.textContent = texto;
 });
 
@@ -381,4 +390,43 @@ function actualizarDatos() {
     pintarDatos(operacionesFiltradas);
 }
 
+
+//BALANCE
+function calcularBalance(operaciones) {
+    let ganancias = 0;
+    let gastos = 0;
+
+    operaciones.forEach(operacion => {
+        if (operacion.type === "Ganancia") {
+            ganancias += operacion.amount;
+        } else if (operacion.type === "Gasto") {
+            gastos += operacion.amount;
+        }
+    });
+        return {
+            ganancias,
+            gastos,
+            total: ganancias - gastos
+        };
+}
+
+function actualizarBalance() {
+    let operacionesFiltradas = aplicarFiltros(datosTodasLasOperaciones);
+
+    const balance = calcularBalance(operacionesFiltradas);
+
+    $("#tabla-balance").querySelectorAll("tbody tr")[0].cells[1].textContent = `+$${balance.ganancias}`;
+    $("#tabla-balance").querySelectorAll("tbody tr")[1].cells[1].textContent = `-$${balance.gastos}`;
+    $("#tabla-balance").querySelectorAll("tbody tr")[2].cells[1].textContent = `$${balance.total}`;
+}
+
+// Actualizar balance al cambiar los filtros
+$selectFiltrarPorTipo.addEventListener("change", actualizarBalance);
+$selectFiltrarPorCategoria.addEventListener("change", actualizarBalance);
+$inputFiltrarPorFecha.addEventListener("change", actualizarBalance);
+$selectOrdenarPor.addEventListener("change", actualizarBalance);
+
+document.addEventListener("DOMContentLoaded", function() {
+    actualizarBalance();
+});
 
