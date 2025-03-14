@@ -1,5 +1,8 @@
 let datosTodasLasOperaciones = leerLocalStorage("operaciones") || [];
 
+let categorias = leerLocalStorage("categorias") || [];
+
+
 function leerLocalStorage(key) {
   const datos = JSON.parse(localStorage.getItem(key))
   return datos;  
@@ -30,10 +33,35 @@ function editarOperacion(id, nuevaData) {
   return datosTodasLasOperaciones; 
 }
 
+
+function agregarCategoria(nuevaCategoria) {
+  categorias.push(nuevaCategoria);
+  guardarLocalStorage("categorias", categorias);
+  return categorias;
+}
+
+function eliminarCategoria(categoria) {
+  categorias = categorias.filter(c => c !== categoria);
+  guardarLocalStorage("categorias", categorias);
+  return categorias;
+}
+
+function editarCategoria(categoriaAntigua, categoriaNueva) {
+  const index = categorias.indexOf(categoriaAntigua);
+  if (index !== -1) {
+    categorias[index] = categoriaNueva;
+    guardarLocalStorage("categorias", categorias);
+  }
+  return categorias;
+}
+
 export default {
     leerLocalStorage,
     guardarLocalStorage,
     agregarOperacion,
     eliminarOperacion,
-    editarOperacion
+    editarOperacion,
+    agregarCategoria,
+    eliminarCategoria,
+    editarCategoria
 }
