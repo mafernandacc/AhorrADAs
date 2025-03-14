@@ -27,7 +27,7 @@
         <!-- BALANCE -->
         <div id="container-balance" class="mx-2 mb-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
             <h2 class="mb4 p-1 text-xl font-mono font font-black">Balance</h2>
-            <table class="table-auto">
+            <table id="tabla-balance" class="table-auto">
                 <tbody>
                   <tr>
                     <td>Ganancias</td>
@@ -53,46 +53,48 @@
         <div id="container-filtros" class="mx-2 mb-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
             <h2 class="mb-2 p-1 text-xl font-mono font font-black">Filtros</h2>
             <a id="ocultar-mostrar-filtros" class="text-sky-600">Ocultar filtros</a>
-            <div class="m-1 flex flex-col">
-                <label class="font-black">Tipo</label>
-                <select class="border">
-                    <option value="Todos">Todos</option>
-                    <option value="Ganancia">Ganancia</option>
-                    <option value="Gasto">Gasto</option>
-                </select>
-            </div>
+            <div id="container-formulario-filtros">
+              <div class="m-1 flex flex-col">
+                  <label class="font-black">Tipo</label>
+                  <select id="select-filtrar-por-tipo" class="border">
+                      <option value="Todos">Todos</option>
+                      <option value="Ganancia">Ganancia</option>
+                      <option value="Gasto">Gasto</option>
+                  </select>
+              </div>
 
-            <div class="m-1 flex flex-col">
-                <label class="font-black">Categoría</label>
-                <select class="border">
-                    <option value="Todas">Todas</option>
-                    <option value="Servicios">Servicios</option>
-                    <option value="Salidas">Salidas</option>
-                    <option value="Educación">Gasto</option>
-                    <option value="Transporte">Transporte</option>
-                    <option value="Trabajo">Trabajo</option>
-                    <option value="Viajes">Viajes</option>
-                    <option value="Comida">Comida</option>
-                </select>
-            </div>
+              <div class="m-1 flex flex-col">
+                  <label class="font-black">Categoría</label>
+                  <select  id="select-filtrar-por-categoria" class="border">
+                      <option value="Todas">Todas</option>
+                      <option value="Servicios">Servicios</option>
+                      <option value="Salidas">Salidas</option>
+                      <option value="Educación">Gasto</option>
+                      <option value="Transporte">Transporte</option>
+                      <option value="Trabajo">Trabajo</option>
+                      <option value="Viajes">Viajes</option>
+                      <option value="Comida">Comida</option>
+                  </select>
+              </div>
 
-            <div class="m-1 flex flex-col">
-                <label class="font-black">Desde</label>
-                <input type="date" class="border">
+              <div class="m-1 flex flex-col">
+                  <label class="font-black">Desde</label>
+                  <input id="input-filtrar-por-fecha" type="date" class="border">
 
-            </div>
+              </div>
 
 
-            <div class="m-1 flex flex-col">
-                <label class="font-black">Ordenar por</label>
-                <select class="border">
-                    <option value="Más reciente">Más reciente</option>
-                    <option value="Menos reciente">Menos reciente</option>
-                    <option value="Mayor monto">Mayor monto</option>
-                    <option value="Menor monto">Menor monto</option>
-                    <option value="A/Z">A/Z</option>
-                    <option value="Z/A">Z/A</option>
-                </select>
+              <div class="m-1 flex flex-col">
+                  <label class="font-black">Ordenar por</label>
+                  <select id="select-ordenar-por" class="border">
+                      <option value="Más reciente">Más reciente</option>
+                      <option value="Menos reciente">Menos reciente</option>
+                      <option value="Mayor monto">Mayor monto</option>
+                      <option value="Menor monto">Menor monto</option>
+                      <option value="A/Z">A/Z</option>
+                      <option value="Z/A">Z/A</option>
+                  </select>
+              </div>
             </div>
 
         </div>
@@ -100,18 +102,18 @@
         <!-- OPERACIONES -->
         <div id="container-operaciones" class="mx-2 mb-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
             <h2 class="mb4 p-1 text-xl font-mono font font-black">Operaciones</h2>
-            <button class="mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-teal-400 font-black">+ Nueva operación</button>
+            <button id="button-nueva-operacion" class="mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-teal-400 font-black">+ Nueva operación</button>
 
             <!-- Sin resultados -->
-            <div>
+            <div id="container-operaciones-sin-resultados">
                 <img src="assets/img/img-sin-operaciones.png" class="justify-self-center">
                 <h3 class="m-4 text-lg text-center font-black">Sin resultados</h3>
                 <p class="text-center">Cambia los filtros o agrega operaciones</p>
             </div>
 
             <!-- Con operaciones -->
-             <div class="hidden">
-                <table class="table-auto">
+             <div id="container-operaciones-con-resultados" class="hidden overflow-x-auto">
+                <table id="list-operaciones" class="table-auto w-full table-striped">
                     <thead>
                       <tr>
                         <th>Descripción</th>
@@ -139,7 +141,6 @@
 
         </div>
 
-        <!-- CATEGORIAS -->
     </section>
 
     <!-- CATEGORIAS -->
@@ -147,14 +148,14 @@
         <h2 class="mb4 p-1 text-3xl font-mono font font-black">Categorías</h2>
         <div id="container-categorias" class="flex flex-col">
             <label class="my-4 text-lg font-black">Nombre</label>
-            <div class="flex">
+            <form id="agregar-nueva-categoria" class="flex">
                 <input type="text" class="border">
-                <button class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
-            </div>
+                <button type="submit" class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
+            </form>
 
         <!-- Agregar tabla -->
         <div class="">
-            <table class="table-auto">
+            <table id="tabla-listado-categorias" class="table-auto">
                 <tbody>
                   <tr>
                     <td></td>
@@ -183,7 +184,7 @@
         <div id="container-reportes" class="hidden">
             <div>
                 <h3 class="my-4 text-lg font-black">Resumen</h3>
-                <table class="table-auto">
+                <table id="tabla-reportes-resumen" class="table-auto">
                     <tbody>
                       <tr>
                         <td>Categoría con mayor ganacia</td>
@@ -221,7 +222,7 @@
             <div>
                 <h3 class="my-4 text-lg font-black">Totales por categorías</h3>
                 
-                <table class="table-auto">
+                <table id="tabla-reportes-totales-categoria" class="table-auto">
                     <thead>
                       <tr>
                         <th>Categoría</th>
@@ -244,7 +245,7 @@
             </div>
             <div>
                 <h3 class="my-4 text-lg font-black">Totales por mes</h3>
-                <table class="table-auto">
+                <table id="tabla-reportes-totales-mes" class="table-auto">
                     <thead>
                       <tr>
                         <th>Mes</th>
@@ -273,22 +274,21 @@
      <section id="view-formulario-nueva-operacion" class="hidden mx-4 my-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
         <h2 class="mb-2 p-1 text-xl font-mono font font-black">Nueva operación</h2>
 
-        <form class="flex flex-col">
+        <form id="formulario-nueva-operacion" class="flex flex-col">
             <label class="font-black">Descripción</label>
-            <input type="text" class="border">
+            <input id="create-description" type="text" class="border">
 
             <label class="font-black">Monto</label>
-            <input type="number" class="border">
+            <input id="create-amount" type="number" class="border">
 
             <label class="font-black">Tipo</label>
-            <select class="border">
+            <select id="create-type" class="border">
                 <option>Ganancia</option>
                 <option>Gasto</option>
             </select>
 
             <label class="font-black">Categoría</label>
-            <select class="border">
-                <option value="Todas">Todas</option>
+            <select id="create-category" class="border">
                 <option value="Servicios">Servicios</option>
                 <option value="Salidas">Salidas</option>
                 <option value="Educación">Gasto</option>
@@ -299,9 +299,9 @@
             </select>
 
             <label class="font-black">Fecha</label>
-            <input type="date" class="border">
+            <input id="create-date" type="date" class="border">
 
-            <button class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
+            <button id="button-cancelar-operacion" class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
             <button type="submit" class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
         </form>
      </section>
@@ -310,22 +310,21 @@
      <section id="view-editar-nueva-operacion" class="hidden mx-4 my-8 p-6 shadow-md shadow-zinc-300 rounded-lg bg-white">
         <h2 class="mb-2 p-1 text-xl font-mono font font-black">Editar operación</h2>
 
-        <form class="flex flex-col">
+        <form id="formulario-editar-operacion" class="flex flex-col">
             <label class="font-black">Descripción</label>
-            <input type="text" class="border">
+            <input id="editar-descripcion" type="text" class="border">
 
             <label class="font-black">Monto</label>
-            <input type="number" class="border">
+            <input id="editar-monto" type="number" class="border">
 
             <label class="font-black">Tipo</label>
-            <select class="border">
+            <select id="editar-tipo" class="border">
                 <option>Ganancia</option>
                 <option>Gasto</option>
             </select>
 
             <label class="font-black">Categoría</label>
-            <select class="border">
-                <option value="Todas">Todas</option>
+            <select id="editar-categoria" class="border">
                 <option value="Servicios">Servicios</option>
                 <option value="Salidas">Salidas</option>
                 <option value="Educación">Gasto</option>
@@ -336,9 +335,9 @@
             </select>
 
             <label class="font-black">Fecha</label>
-            <input type="date" class="border">
+            <input id="editar-fecha" type="date" class="border">
 
-            <button class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
+            <button id="button-cancelar-edicion" class="mx-1 m-4 p-1 rounded text-sm font-mono bg-gray-200 font-black">Cancelar</button>
             <button type="submit"  class="mx-1 mb-4 p-1 rounded text-sm font-mono text-neutral-50 bg-green-600 font-black">Agregar</button>
         </form>
      </section>
@@ -346,5 +345,5 @@
    </main>
 </body>
 
-<script src="main.js"></script>
+<script type="module" src="main.js"></script>
 </html>
