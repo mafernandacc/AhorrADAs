@@ -28,10 +28,10 @@ const $formularioNuevaOperacion = $("#formulario-nueva-operacion")
 const $listadoDeOperaciones = $("#list-operaciones")
 const $viewEditarNuevaOperacion = $("#view-editar-nueva-operacion")
 const $formularioEditarOperacion = $("#formulario-editar-operacion")
-const $containerOperaciones = $("#container-operaciones")
 const $containerOperacionesSinResultados = $("#container-operaciones-sin-resultados")
 const $containerOperacionesConResultados = $("#container-operaciones-con-resultados")
 const $formNuevaCategoria = $("#agregar-nueva-categoria");
+const containerFormularioFiltros = $("#container-formulario-filtros");
 
 //Botones 
 const $buttonViewBalance = $("#button-view-balance")
@@ -40,6 +40,14 @@ const $buttonViewReportes = $("#button-view-reportes")
 const $buttonNuevaOperacion = $("#button-nueva-operacion")
 const $buttonCancelarOperacion = $("#button-cancelar-operacion")
 const $buttonCancelarEdicion = $("#button-cancelar-edicion");
+const $ocultarMostrarFiltros = $("#ocultar-mostrar-filtros");
+
+//Inputs filtros
+const $selectFiltrarPorTipo = $("#select-filtrar-por-tipo")
+const $selectFiltrarPorCategoria = $("#select-filtrar-por-categoria")
+const $inputFiltrarPorFecha = $("#input-filtrar-por-fecha")
+const $selectOrdenarPor = $("#select-ordenar-por")
+
 
 // Cargar operaciones guardadas
 let datosTodasLasOperaciones = funciones.leerLocalStorage("operaciones") || [];
@@ -213,11 +221,12 @@ let categorias = funciones.leerLocalStorage("categorias") || [];
 
 // Actualizar las categorías en los selectores
 function actualizarCategoriasEnSelectores() {
-    const selectores = ["#create-category", "#editar-categoria", "#filtrar-por-categoria"];
+    const selectores = ["#create-category", "#editar-categoria", "#select-filtrar-por-categoria"];
+    
     
     selectores.forEach(selector => {
       const select = $(selector);
-      select.innerHTML = "<option value=''>Seleccionar categoría</option>"; // Resetear el contenido del select
+      select.innerHTML = "<option value='Todos'>Todas</option>"; ; 
   
     
       categorias.forEach(categoria => {
@@ -296,4 +305,80 @@ function actualizarCategoriasEnSelectores() {
   
   pintarCategorias(categorias);
   
-  
+
+//FILTROS
+function aplicarFiltros(operaciones) {
+    let operacionesFiltradas = [...operaciones]; 
+
+    // Filtrar por tipo
+    const tipoSeleccionado = $selectFiltrarPorTipo.value;
+    if (tipoSeleccionado !== "Todos") {
+        operacionesFiltradas = operacionesFiltradas.filter(elem => elem.type === tipoSeleccionado);
+    }
+
+    // Filtrar por categoría
+    const categoriaSeleccionada = $selectFiltrarPorCategoria.value;
+    if (categoriaSeleccionada !== "Todos") {
+        operacionesFiltradas = operacionesFiltradas.filter(elem => elem.category === categoriaSeleccionada);
+    }
+
+    // Filtrar por fecha
+    const fechaSeleccionada = $inputFiltrarPorFecha.value.trim();
+    if (fechaSeleccionada) {
+        const fechaFiltrada = dayjs(fechaSeleccionada, "DD-MM-YYYY").toDate(); 
+        operacionesFiltradas = operacionesFiltradas.filter(operacion => {
+            const fechaOperacion = convertirFecha(operacion.date);  
+        });
+    }
+
+    return operacionesFiltradas;
+}
+
+//Convertir fecha a formato Date para omparar
+function convertirFecha(fecha) {
+    const [dia, mes, anio] = fecha.split("-");
+    return new Date(`${anio}-${mes}-${dia}`); 
+}
+
+// Ordenar operaciones
+function aplicarOrden(operacionesFiltradas, ordenSeleccionado) {
+    switch (ordenSeleccionado) {
+        case "Más reciente":
+            return operacionesFiltradas.sort((a, b) => convertirFecha(b.date) - convertirFecha(a.date)); 
+        case "Menos reciente":
+            return operacionesFiltradas.sort((a, b) => convertirFecha(a.date) - convertirFecha(b.date)); 
+        case "Mayor monto":
+            return operacionesFiltradas.sort((a, b) => b.amount - a.amount);
+        case "Menor monto":
+            return operacionesFiltradas.sort((a, b) => a.amount - b.amount);
+        case "A/Z":
+            return operacionesFiltradas.sort((a, b) => (a.description || "").toUpperCase().localeCompare((b.description || "").toUpperCase()));
+        case "Z/A":
+            return operacionesFiltradas.sort((a, b) => (b.description || "").toUpperCase().localeCompare((a.description || "").toUpperCase()));
+        default:
+            return operacionesFiltradas;
+    }
+}
+
+// Filtrar y ordenar 
+$ocultarMostrarFiltros.addEventListener("click", () => {
+    containerFormularioFiltros.classList.toggle("hidden");
+    const texto = containerFormularioFiltros.classList.contains("hidden") ? "Mostrar filtros" : "Ocultar filtros";
+    $ocultarMostrarFiltros.textContent = texto;
+});
+
+$selectFiltrarPorTipo.addEventListener("input", actualizarDatos);
+$selectFiltrarPorCategoria.addEventListener("input", actualizarDatos);
+$inputFiltrarPorFecha.addEventListener("input", actualizarDatos);
+$selectOrdenarPor.addEventListener("change", actualizarDatos);
+
+function actualizarDatos() {
+    let operacionesFiltradas = aplicarFiltros(datosTodasLasOperaciones);
+
+    const valorSeleccionado = $selectOrdenarPor.value;
+    operacionesFiltradas = aplicarOrden(operacionesFiltradas, valorSeleccionado);
+
+    pintarDatos(operacionesFiltradas);
+}
+
+
